@@ -1,0 +1,62 @@
+{
+  "name": "@lib-stack/logger",
+  "type": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@10.14.0",
+  "description": "A management tool for log printing.",
+  "author": "Kisstar <dwh.chn@foxmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/lib-stack/logger#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lib-stack/logger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lib-stack/logger/issues"
+  },
+  "keywords": [
+    "lib",
+    "logger"
+  ],
+  "engines": {
+    "node": ">=24.1.0",
+    "pnpm": ">=10.14.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24.1.0",
+      "onFail": "error"
+    }
+  },
+  "scripts": {
+    "commit": "git-cz",
+    "lint": "eslint",
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^5.2.1",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@commitlint/cz-commitlint": "^19.8.1",
+    "commitizen": "^4.3.1",
+    "eslint": "^9.31.0",
+    "eslint-plugin-format": "^1.0.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  }
+}
