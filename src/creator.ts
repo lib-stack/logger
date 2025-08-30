@@ -1,3 +1,4 @@
+import { formatDate } from '@/utils'
 import type { LogLevel, LogType } from '@/level'
 import { LEVEL_MAP, LOG_MAP } from '@/level'
 
@@ -37,7 +38,7 @@ function factory(
     }
 
     args.unshift(`[${type.toUpperCase()}]`)
-    args.unshift(`[${new Date().toLocaleString().replace(/\//g, '-')}]`)
+    args.unshift(`[${formatDate()}]`)
 
     fn.call(console, ...args)
   }
