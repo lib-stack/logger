@@ -1,8 +1,11 @@
 {
   "name": "@lib-stack/logger",
-  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org" },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "packageManager": "pnpm@10.14.0",
   "description": "A management tool for log printing.",
   "author": "Kisstar <dwh.chn@foxmail.com>",
