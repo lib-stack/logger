@@ -15,6 +15,8 @@ export interface Logger {
   fatal: Console['error']
   setLevel: (level: LogLevel) => void
   getLevel: () => LogLevel
+  get(name?: string, options?: Extract<LoggerOptions, "name">): Logger
+  getAll(): Logger[]
 }
 
 function factory(
@@ -53,6 +55,7 @@ function factory(
 function createLogger(
   options: LoggerOptions = {},
 ): Logger {
+  const loggerMap = new Map<string, Logger>()
   const logByType = factory(options)
   let localLevel: LogLevel = 'off'
 
@@ -64,16 +67,36 @@ function createLogger(
     return localLevel
   }
 
-  return {
-    trace: (...args) => logByType('trace', localLevel, ...args),
-    debug: (...args) => logByType('debug', localLevel, ...args),
-    info: (...args) => logByType('info', localLevel, ...args),
-    warn: (...args) => logByType('warn', localLevel, ...args),
-    error: (...args) => logByType('error', localLevel, ...args),
-    fatal: (...args) => logByType('fatal', localLevel, ...args),
+  const defaultLogger = {
+    trace: (...args: unknown[]) => logByType('trace', localLevel, ...args),
+    debug: (...args: unknown[]) => logByType('debug', localLevel, ...args),
+    info: (...args: unknown[]) => logByType('info', localLevel, ...args),
+    warn: (...args: unknown[]) => logByType('warn', localLevel, ...args),
+    error: (...args: unknown[]) => logByType('error', localLevel, ...args),
+    fatal: (...args: unknown[]) => logByType('fatal', localLevel, ...args),
     setLevel,
     getLevel,
+    get(name = 'default', options?: Extract<LoggerOptions, 'name'>) {
+      if (loggerMap.has(name)) {
+        return loggerMap.get(name)!
+      }
+
+      const logger = createLogger({ name, ...(options || {}) })
+
+      loggerMap.set(name, logger)
+
+      return logger
+    },
+    getAll() {
+      return Array.from(loggerMap.values())
+    },
   }
+
+  loggerMap.set('default', defaultLogger)
+
+  return defaultLogger
 }
 
-export default createLogger
+const logger = createLogger()
+
+export { logger, createLogger }

@@ -1,5 +1,5 @@
 export type { Logger } from '@/creator'
 
-export { default as createLogger } from '@/creator'
+export { logger, createLogger } from '@/creator'
 
-export type { LogLevel, LogType } from '@/level'
+export type { LogLevel } from '@/level'
