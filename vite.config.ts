@@ -13,6 +13,7 @@ export default defineConfig({
     dts({ outDir: 'dist/types' }),
   ],
   build: {
+    emptyOutDir: true,
     lib: {
       formats: ['es'],
       entry: {
