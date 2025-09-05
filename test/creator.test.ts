@@ -104,4 +104,30 @@ describe('createLogger', () => {
     logger.get('logger2')
     expect(logger.getAll().length).toBe(2)
   })
+
+  it('should get parent logger', () => {
+    const logger = createLogger()
+    const parent = logger.parent()
+    const child = logger.get('child')
+    const childParent = child.parent()
+
+    expect(parent).toBe(undefined)
+    expect(childParent).toBe(logger)
+  })
+
+  it('should use custom logApi', () => {
+    const customLogApi = {
+      trace: vi.fn(),
+      debug: vi.fn(),
+      info: vi.fn(),
+      warn: vi.fn(),
+      error: vi.fn(),
+      fatal: vi.fn(),
+    }
+    const logger = createLogger({ logApi: customLogApi })
+
+    logger.setLevel('trace')
+    logger.trace('trace message')
+    expect(customLogApi.trace).toBeCalledTimes(1)
+  })
 })
