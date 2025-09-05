@@ -1,5 +1,9 @@
 # Changelog
 
+## <small>0.2.1 (2025-09-05)</small>
+
+* build: adjust compilation configuration and issue commands ([ac5f0a8](https://github.com/lib-stack/logger/commit/ac5f0a8))
+
 ## 0.2.0 (2025-09-05)
 
 * test: add test cases for the parent logger and custom logApi ([00d2958](https://github.com/lib-stack/logger/commit/00d2958))
