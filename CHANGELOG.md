@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.0 (2025-09-05)
+
+* test: add test cases for the parent logger and custom logApi ([00d2958](https://github.com/lib-stack/logger/commit/00d2958))
+* feat: support configuring printing methods and parent logger ([94897cb](https://github.com/lib-stack/logger/commit/94897cb))
+
 ## 0.1.0 (2025-08-31)
 
 * chore: add release config ([e9e9a7f](https://github.com/lib-stack/logger/commit/e9e9a7f))
