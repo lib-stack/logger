@@ -1,9 +1,13 @@
-import { formatDate } from '@/utils'
 import type { LogLevel, LogType } from '@/level'
-import { LEVEL_MAP, LOG_MAP } from '@/level'
+import type { LogApi } from '@/log'
+import { LEVEL_MAP } from '@/level'
+import { defaultLogApi } from '@/log'
+import { formatDate } from '@/utils'
 
 interface LoggerOptions {
   name?: string
+  parent?: Logger
+  logApi?: LogApi
 }
 
 export interface Logger {
@@ -15,17 +19,18 @@ export interface Logger {
   fatal: Console['error']
   setLevel: (level: LogLevel) => void
   getLevel: () => LogLevel
-  get(name?: string, options?: Extract<LoggerOptions, "name">): Logger
-  getAll(): Logger[]
+  get: (name?: string, options?: Extract<LoggerOptions, 'name'>) => Logger
+  getAll: () => Logger[]
+  parent: () => Logger | undefined
 }
 
 function factory(
   options: LoggerOptions = {},
 ) {
   return function logger(type: LogType, level: LogLevel, ...args: unknown[]) {
-    const { name = 'default' } = options
-    // eslint-disable-next-line no-console
-    const fn = console[LOG_MAP[type]]
+    const { name = 'default', logApi = defaultLogApi } = options
+
+    const fn = logApi[type]
     const levelList = LEVEL_MAP[level]
 
     // Exit if the specified method does not exist or the current log level is not allowed
@@ -81,7 +86,7 @@ function createLogger(
         return loggerMap.get(name)!
       }
 
-      const logger = createLogger({ name, ...(options || {}) })
+      const logger = createLogger({ name, parent: this, ...(options || {}) })
 
       loggerMap.set(name, logger)
 
@@ -89,6 +94,9 @@ function createLogger(
     },
     getAll() {
       return Array.from(loggerMap.values())
+    },
+    parent() {
+      return options.parent
     },
   }
 
@@ -99,4 +107,4 @@ function createLogger(
 
 const logger = createLogger()
 
-export { logger, createLogger }
+export { createLogger, logger }

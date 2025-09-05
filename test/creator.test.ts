@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { createLogger, logger } from '../src/creator'
+import { defaultLogApi } from '../src/log'
 
 describe('createLogger', () => {
   it('should get default logger', () => {
@@ -12,14 +13,14 @@ describe('createLogger', () => {
     // the default logger
     logger.setLevel('info')
 
-    const info = vi.spyOn(console, 'info')
+    const info = vi.spyOn(defaultLogApi, 'info')
 
     logger.info('some message')
     expect(info.mock.calls[0].includes('[default]')).toBeTruthy()
 
     // Use the `get` method to obtain the logger
     const moduleLogger = logger.get('module')
-    const moduleInfo = vi.spyOn(console, 'info')
+    const moduleInfo = vi.spyOn(defaultLogApi, 'info')
 
     moduleLogger.setLevel('info')
     moduleLogger.info('some message')
@@ -27,7 +28,7 @@ describe('createLogger', () => {
 
     // Use the `createLogger` method to obtain the logger
     const customLogger = createLogger({ name: 'create' })
-    const customInfo = vi.spyOn(console, 'info')
+    const customInfo = vi.spyOn(defaultLogApi, 'info')
 
     customLogger.setLevel('info')
     customLogger.info('some message')
@@ -60,8 +61,8 @@ describe('createLogger', () => {
 
     logger.setLevel('warn')
 
-    const infoSpy = vi.spyOn(console, 'info')
-    const debugSpy = vi.spyOn(console, 'debug')
+    const infoSpy = vi.spyOn(defaultLogApi, 'info')
+    const debugSpy = vi.spyOn(defaultLogApi, 'debug')
 
     logger.info('some message')
     expect(infoSpy).not.toBeCalled()
@@ -74,8 +75,8 @@ describe('createLogger', () => {
 
     logger.setLevel('warn')
 
-    const warnSpy = vi.spyOn(console, 'warn')
-    const errorSpy = vi.spyOn(console, 'error')
+    const warnSpy = vi.spyOn(defaultLogApi, 'warn')
+    const errorSpy = vi.spyOn(defaultLogApi, 'error')
 
     logger.warn('warning message1')
     expect(warnSpy).toBeCalledTimes(1)
@@ -88,8 +89,8 @@ describe('createLogger', () => {
 
     logger.setLevel('warn')
 
-    const warnSpy = vi.spyOn(console, 'warn')
-    const errorSpy = vi.spyOn(console, 'error')
+    const warnSpy = vi.spyOn(defaultLogApi, 'warn')
+    const errorSpy = vi.spyOn(defaultLogApi, 'error')
 
     logger.warn('warning message')
     expect(warnSpy.mock.calls[0].join(' ')).toMatch(/\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\] \[WARN\] \[\w+\] - warning message/)
