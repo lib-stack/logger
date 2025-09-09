@@ -10,7 +10,7 @@ export default defineConfig({
     },
   },
   plugins: [
-    dts({ outDir: 'dist/types' }),
+    dts({ outDir: 'dist/types', rollupTypes: true }),
   ],
   build: {
     emptyOutDir: true,
