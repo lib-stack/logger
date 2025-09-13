@@ -1,5 +1,9 @@
 # Changelog
 
+## <small>0.2.2 (2025-09-13)</small>
+
+* build: generate a single type file ([a14435d](https://github.com/lib-stack/logger/commit/a14435d))
+
 ## <small>0.2.1 (2025-09-05)</small>
 
 * build: adjust compilation configuration and issue commands ([ac5f0a8](https://github.com/lib-stack/logger/commit/ac5f0a8))
